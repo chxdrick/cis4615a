@@ -1,6 +1,6 @@
 public class Point implements Serializable {
-  private double x;
-  private double y;
+  private transient double x;
+  private transient double y;
  
   public Point(double x, double y) {
     this.x = x;
@@ -20,7 +20,8 @@ public class Coordinates extends Point {
       fout = new FileOutputStream("point.ser");
       ObjectOutputStream oout = new ObjectOutputStream(fout);
       oout.writeObject(p);
-    } catch (Throwable t) {
+      oout.close();
+    } catch (Exception e) {
       // Forward to handler
     } finally {
       if (fout != null) {
