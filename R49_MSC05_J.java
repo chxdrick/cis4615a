@@ -3,7 +3,16 @@ class ReadNames {
   private final InputStreamReader input;
   private final BufferedReader reader;
  
+  public static final int fileSizeLimit = 1000000;
+  
   public ReadNames(String filename) throws IOException {
+    long size = Files.size( Paths.get( filename));
+    if (size > fileSizeLimit) {
+      throw new IOException("File too large");
+    } 
+    else if (size == 0L) {
+      throw new IOException("File size cannot be determined, possibly too large");
+    }
     this.input = new FileReader(filename);
     this.reader = new BufferedReader(input);
   }
